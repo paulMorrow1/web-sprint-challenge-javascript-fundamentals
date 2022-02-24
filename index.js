@@ -107,12 +107,14 @@ const zooAnimals = [
   displayNames will be an array of strings, and each string should follow this pattern: "name: {name}, scientific: {scientific name}"
   */
 
-function animalNames(zooAnimals, animal) {
-  let displayNames = [];
-  zooAnimals.forEach(function (animal) {
-    displayNames.push(animal.animal_name, animal.scientificName);
+function animalNames(zooAnimals) {
+  let newAnimals = [];
+  zooAnimals.forEach((animal) => {
+    newAnimals.push(
+      `name: ${animal.animal_name}, scientific: ${animal.scientific_name}`
+    );
   });
-  return displayNames;
+  return newAnimals;
 }
 
 /* 🦁🦁🦁 Request 2: .map() 🦁🦁🦁
@@ -121,8 +123,10 @@ function animalNames(zooAnimals, animal) {
   For example: ['jackal, asiatic', .....]
   */
 
-function lowerCaseNames(/*Your Code Here*/) {
-  /*Your Code Here*/
+function lowerCaseNames(zooAnimals) {
+  return zooAnimals.map((animal) => {
+    return animal.animal_name.toLowerCase();
+  });
 }
 
 /* 🦁🦁🦁 Request 3: .filter() 🦁🦁🦁
@@ -130,8 +134,12 @@ function lowerCaseNames(/*Your Code Here*/) {
   Using lowPopulationAnimals use .filter() to create a new array of objects which contains only the animals with a population of less than 5.
   */
 
-function lowPopulationAnimals(/*Your Code Here*/) {
-  /*Your Code Here*/
+function lowPopulationAnimals(zooAnimals) {
+  return zooAnimals.filter((animal) => {
+    if (animal.population < 5) {
+      return animal;
+    }
+  });
 }
 
 /* 🦁🦁🦁 Request 4: .reduce() 🦁🦁🦁
@@ -140,8 +148,11 @@ function lowPopulationAnimals(/*Your Code Here*/) {
   Remember the reduce method takes two arguments: a callback (which itself takes two args - the accumulator and the item), and an initial value for the count.
   */
 
-function USApop(/*Your Code Here*/) {
-  /*Your Code Here*/
+function USApop(zooAnimals) {
+  return zooAnimals.reduce((accum, animal) => {
+    accum = accum + animal.population;
+    return accum;
+  }, 0);
 }
 
 // 🦁🦁🦁 Callbacks 🦁🦁🦁
@@ -159,14 +170,16 @@ function consume(a, b, cb) {
 /* 🦁🦁🦁 Step 2: Create several functions to callback with consume(); 🦁🦁🦁 */
 // 🦁🦁🦁 Use add to return the sum of two numbers 🦁🦁🦁
 
-function add(consume, a, b, cb) {
-  let sum;
+function add(num1, num2) {
+  return num1 + num2;
 }
+
+// consume(5, 4, add);
 
 // 🦁🦁🦁 Use multiply to return the product of two numbers 🦁🦁🦁
 
-function multiply(/*Your Code Here */) {
-  /*Your Code Here */
+function multiply(num1, num2) {
+  return num1 * num2;
 }
 
 // 🦁🦁🦁 Use greeting to accept a first and last name and return "Hello {first-name} {last-name}, nice to meet you!" 🦁🦁🦁
@@ -223,7 +236,25 @@ CuboidMaker.prototype.surfaceArea = function () {
 
 // 🦄🦄🦄 Topic 4: Classes 🦄🦄🦄 //
 //🦄🦄🦄 1. Take your prototypes from above and refactor into class syntax. Please rename your class CuboidMakerTwo and your object cuboidTwo 🦄🦄🦄
-class CuboidMakerTwo {}
+
+class CuboidMakerTwo {
+  constructor({ length, width, height }) {
+    this.length = length;
+    this.width = width;
+    this.height = height;
+  }
+  volume() {
+    return this.length * this.width * this.height;
+  }
+  surfaceArea() {
+    return (
+      2 *
+      (this.length * this.width +
+        this.length * this.height +
+        this.width * this.height)
+    );
+  }
+}
 
 //🦄🦄🦄 Test your volume and surfaceArea methods by uncommenting the logs below: 🦄🦄🦄
 // console.log(cuboidTwo.volume()); // 100
